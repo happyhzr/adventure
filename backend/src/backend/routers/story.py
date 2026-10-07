@@ -12,6 +12,7 @@ from backend.schemas.story import (
     CreateStoryRequest,
 )
 from backend.schemas.job import StoryJobResponse
+from backend.core.story_generator import StoryGenerator
 
 router = APIRouter(prefix="/stories", tags=["stories"])
 
@@ -55,8 +56,8 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
         try:
             job.status = "processing"
             db.commit()
-            story = {}
-            job.story_id = 1
+            story = StoryGenerator.generate_story(db, session_id, theme)
+            job.story_id = story.id
             job.status = "completed"
             job.completed_at = datetime.now()
             db.commit()
