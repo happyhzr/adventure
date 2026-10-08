@@ -22,4 +22,4 @@ class StoryNodeLLM(BaseModel):
 
 class StoryLLMResponse(BaseModel):
     title: str = Field(description="The title of the story")
-    rootNode: str = Field(description="The root node of the story")
+    rootNode: StoryNodeLLM = Field(description="The root node of the story")

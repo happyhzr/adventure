@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from langchain_openai import ChatOpenAI
+from langchain_deepseek import ChatDeepSeek
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 from dotenv import load_dotenv
@@ -15,7 +15,9 @@ load_dotenv()
 class StoryGenerator:
     @classmethod
     def _get_llm(cls):
-        return ChatOpenAI(model="gpt-6-luna")
+        return ChatDeepSeek(
+            model=settings.DEEPSEEK_MODEL, api_key=settings.DEEPSEEK_API_KEY
+        )
 
     @classmethod
     def generate_story(
@@ -40,6 +42,7 @@ class StoryGenerator:
         root_node_data = story_structure.rootNode
         if isinstance(root_node_data, dict):
             root_node_data = StoryNodeLLM.model_validate(root_node_data)
+        cls._process_story_node(db, story_db.id, root_node_data, is_root=True)
         db.commit()
         return story_db
 

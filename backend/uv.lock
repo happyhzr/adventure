@@ -49,7 +49,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi", extra = ["all"] },
     { name = "langchain" },
-    { name = "langchain-openai" },
+    { name = "langchain-deepseek" },
     { name = "psycopg2-binary" },
     { name = "python-dotenv" },
     { name = "sqlalchemy" },
@@ -60,7 +60,7 @@ dependencies = [
 requires-dist = [
     { name = "fastapi", extras = ["all"], specifier = ">=0.142.2" },
     { name = "langchain", specifier = ">=1.4.3" },
-    { name = "langchain-openai", specifier = ">=1.6.7" },
+    { name = "langchain-deepseek" },
     { name = "psycopg2-binary", specifier = ">=2.9.13" },
     { name = "python-dotenv", specifier = ">=1.2.4" },
     { name = "sqlalchemy", specifier = ">=2.1.3" },
@@ -630,6 +630,19 @@ dependencies = [
 sdist = { url = "https://mirrors.aliyun.com/pypi/packages/18/87/9e5d393bbcec068c51becc255a15aacfd8a14ac5826179751c1c320e5258/langchain_core-1.6.6.tar.gz", hash = "sha256:67616d984c085009be2c381c2efd330d32429a58aebab295b4f51b6573964511" }
 wheels = [
     { url = "https://mirrors.aliyun.com/pypi/packages/90/10/8c00b4dc094886314c907ec7ead258dfee28948cf44175976cc4fba9aba8/langchain_core-1.6.6-py3-none-any.whl", hash = "sha256:d9a71e312ab7443701238750e04a57aefc037c4f1ec82837c8a1609d9a14a9b1" },
+]
+
+[[package]]
+name = "langchain-deepseek"
+version = "1.1.1"
+source = { registry = "https://mirrors.aliyun.com/pypi/simple/" }
+dependencies = [
+    { name = "langchain-core" },
+    { name = "langchain-openai" },
+]
+sdist = { url = "https://mirrors.aliyun.com/pypi/packages/1b/6d/469f03fc140d7e8974246b41d65e71a3c7a6bc9ceba2f31bd5d8b0892c6a/langchain_deepseek-1.1.1.tar.gz", hash = "sha256:94267fb5500813fa41ea4bbc8b523551cfbf58f8966ed3b91dbb8991f8bd70e5" }
+wheels = [
+    { url = "https://mirrors.aliyun.com/pypi/packages/5d/1b/da9b7fcdb205acf5405dc961d8edaf779eab18326938811530b3032d6803/langchain_deepseek-1.1.1-py3-none-any.whl", hash = "sha256:aec298233606b1289898543e56f90373f71e919b586f580f5e161c018ab21dcb" },
 ]
 
 [[package]]

@@ -62,6 +62,7 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
             job.completed_at = datetime.now()
             db.commit()
         except Exception as e:
+            db.rollback()
             job.status = "failed"
             job.completed_at = datetime.now()
             job.error = str(e)
@@ -75,8 +76,24 @@ def get_complete_story(story_id: int, db: Session = Depends(get_db)):
     story = db.query(Story).filter(Story.id == story_id).first()
     if not story:
         raise HTTPException(status_code=404, detail="Story not found")
-    return story
+    return build_complete_story_tree(db, story)
 
 
 def build_complete_story_tree(db: Session, story: Story) -> CompleteStoryResponse:
-    pass
+    nodes = db.query(StoryNode).filter(StoryNode.story_id == story.id).all()
+    roots = [node for node in nodes if node.is_root]
+    if not roots:
+        raise HTTPException(status_code=409, detail="Story has no root node")
+    if len(roots) > 1:
+        raise HTTPException(status_code=409, detail="Story has multiple root nodes")
+    all_nodes = {
+        node.id: CompleteStoryNodeResponse.model_validate(node) for node in nodes
+    }
+    return CompleteStoryResponse(
+        id=story.id,
+        title=story.title,
+        session_id=story.session_id,
+        created_at=story.created_at,
+        root_node=all_nodes[roots[0].id],
+        all_nodes=all_nodes,
+    )
