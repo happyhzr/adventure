@@ -86,7 +86,9 @@ function StoryGame({ story, onNewStory }: Props) {
           </button>
         </div>
         {onNewStory ? (
-          <button onClick={onNewStory} className="new-story-btn"></button>
+          <button onClick={onNewStory} className="new-story-btn">
+            New Story
+          </button>
         ) : null}
       </div>
     </div>
